@@ -1,0 +1,214 @@
+﻿<UserControl x:Class="BumYoungTools.View.BumYoung1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BumYoungTools.View"
+             xmlns:converter="clr-namespace:BumYoungTools.Converter"
+             mc:Ignorable="d" 
+             DataContext="{Binding Path=BumYoung1VM, Source={StaticResource Locator}}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converter:TextLengthToBoolean x:Key="TextLengthToBoolean"/>
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="Background" Value="Crimson"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontWeight" Value="DemiBold"/>
+                <Setter Property="Margin" Value="10 0 0 0"/>
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Background" Value="GreenYellow"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontWeight" Value="DemiBold"/>
+                <Setter Property="Width" Value="300"/>
+                <Setter Property="Margin" Value="10 10 0 10"/>
+            </Style>
+            <Style TargetType="{x:Type RadioButton}">
+                <Setter Property="Background" Value="GreenYellow"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Width" Value="300"/>
+                <Setter Property="Margin" Value="10 0 5 0"/>
+            </Style>
+            <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Calendar}">
+                            <!-- Wrapping in ViewBox will enlarge calendar of that size.-->
+                            <Viewbox Height="250"
+                         Width="400">
+                                <CalendarItem x:Name="PART_CalendarItem"
+                                  Background="{TemplateBinding Background}"
+                                  BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}"/>
+                            </Viewbox>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="40"/>
+            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0">
+            <GroupBox Header="검색 조건">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel HorizontalAlignment="Left" Grid.Column="0">
+                        <!--
+                        https://search.naver.com/search.naver?
+                    where=post&query=%EC%95%84%EB%AC%B4%EA%B1%B0%EB%82%98
+                    &ie=utf8
+                    &st=sim&sm=tab_opt&date_from=20030520&date_to=20170426&date_option=7&srchby=all
+                    &dup_remove=1&post_blogurl=tistory.com&post_blogurl_without=
+                    &nso=so%3Ar%2Ca%3Aall%2Cp%3A1y&mson=0
+                    
+                    파라메터 분석 
+                    query : 검색 키워드 : 아무거나
+                    st : 정렬기준 : 최신순(date) | 유사도(sim) (선택)
+                    srchby : 영역 : 전체(all) | 제목(title) (선택) 
+                    date_option : 기간 설정 (1-8) 
+                         (0: 전체, 2: 1일, 3: 1주, 4: 1개월, 6: 6개월, 7: 1년, 8: 기간설정)
+                    dup_remove : 중복 제거 : 0 (포함) | 1 (제거)
+                    post_blogurl : 블로그 URL (TEXT)
+                    post_blogurl_without : 제외 블로그 URL (TEXT)
+                    nso : (불명)
+                    mson : (불명)
+                    -->
+                        <Label Content="검색 키워드:"></Label>
+                        <TextBox></TextBox>
+                        <Label Content="블로그 URL:"></Label>
+                        <TextBox Name="post_blogurl">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="Background" Value="GreenYellow"/>
+                                    <Setter Property="FontSize" Value="15"/>
+                                    <Setter Property="FontWeight" Value="DemiBold"/>
+                                    <Setter Property="Width" Value="300"/>
+                                    <Setter Property="Margin" Value="10 10 0 10"/>
+                                    <Style.Triggers>
+                                        <!--
+                                        post_blogurl_without 엘리먼트(TextBox) 의 Text.Length 속성을 TextLengthToBoolean 컨버터를 통해서 True 또는 False 로 변경하여 
+                                        만약, post_blogurl_without 엘리먼트에 어떠한 글자라도 존재한다면 self(자신)의 IsEnabled 속성을 False로 변환
+                                    
+                                        Value 속성의 True는 대소문자를 구분하지 않으므로 true로 써도 무방
+                                    -->
+                                        <DataTrigger Binding="{Binding Path=Text.Length,ElementName=post_blogurl_without, Converter={StaticResource ResourceKey=TextLengthToBoolean}}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="Background" Value="DarkGray"/>
+                                        </DataTrigger>
+                                        <!-- 
+                                        TO DO: 블로그 URL의 형태가 잘못된 형태인 경우 색상을 변경
+                                        Converter 이름 UrlStringToBoolean.cs
+                                    -->
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                        <Label Content="제외 블로그 URL:"></Label>
+                        <TextBox Name="post_blogurl_without">
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="Background" Value="GreenYellow"/>
+                                    <Setter Property="FontSize" Value="15"/>
+                                    <Setter Property="FontWeight" Value="DemiBold"/>
+                                    <Setter Property="Width" Value="300"/>
+                                    <Setter Property="Margin" Value="10 10 0 10"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=Text.Length,ElementName=post_blogurl ,Converter={StaticResource ResourceKey=TextLengthToBoolean}}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                            <Setter Property="Background" Value="DarkGray"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                    <!-- 
+                                        TO DO: 블로그 URL의 형태가 잘못된 형태인 경우 색상을 변경
+                                        Converter 이름 UrlStringToBoolean.cs
+                                 -->
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                        <Label Content="정렬 기준 :"></Label>
+                        <RadioButton GroupName="st" Content="최신순" IsChecked="True">
+                        </RadioButton>
+                        <RadioButton GroupName="st" Content="유사도">
+                        </RadioButton>
+
+                        <Label Content="검색 영역 :"></Label>
+                        <RadioButton GroupName="srchby" Content="전체" IsChecked="True">
+                        </RadioButton>
+                        <RadioButton GroupName="srchby" Content="제목">
+                        </RadioButton>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Left" Grid.Column="1">
+                        <Label Content="기간 설정 :"></Label>
+                        <RadioButton GroupName="date_option" Content="전체" IsChecked="True">
+                        </RadioButton>
+                        <RadioButton GroupName="date_option" Content="1일">
+                        </RadioButton>
+                        <RadioButton GroupName="date_option" Content="1주">
+                        </RadioButton>
+                        <RadioButton GroupName="date_option" Content="1개월">
+                        </RadioButton>
+                        <RadioButton GroupName="date_option" Content="6개월">
+                        </RadioButton>
+                        <RadioButton GroupName="date_option" Content="1년">
+                        </RadioButton>
+                        <RadioButton GroupName="date_option" Content="기간설정">
+                        </RadioButton>
+                        <StackPanel>
+                            <Label Content="기간 설정 :"></Label>
+                            <Label Content="부터 : " FontSize="10" Background="White"></Label>
+                            <DatePicker FontSize="15" CalendarStyle="{StaticResource styleCalendar}" Margin="10 0 5 0"></DatePicker>
+                            <Label Content="까지 : " FontSize="10" Background="White"></Label>
+                            <DatePicker FontSize="15" CalendarStyle="{StaticResource styleCalendar}" Margin="10 0 5 0"></DatePicker>
+                        </StackPanel>
+                        
+                        <Label Content="중복 글 허용 :"></Label>
+                        <RadioButton GroupName="dup_remove" Content="중복 포함" IsChecked="True">
+                        </RadioButton>
+                        <RadioButton GroupName="dup_remove" Content="중복 제거">
+                        </RadioButton>
+
+                        <Button Margin="10 10 0 0"> 검 색 </Button>
+                    </StackPanel>
+                </Grid>
+                
+            </GroupBox>
+        </DockPanel>
+        <GridSplitter Grid.Column="1" Width="4" HorizontalAlignment="Stretch"></GridSplitter>
+        <DockPanel Grid.Column="2" Margin="0 0 0 0">
+            <TabControl>
+                <TabItem Header="현황">
+                    <DataGrid x:Name="NaverSearchResult" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="제목"></DataGridTextColumn>
+                            <DataGridTextColumn Header="날짜"></DataGridTextColumn>
+                            <DataGridTextColumn Header="요약"></DataGridTextColumn>
+                            <DataGridHyperlinkColumn Header="링크"></DataGridHyperlinkColumn>
+                            <DataGridTextColumn Header="활성화"></DataGridTextColumn>
+                            <DataGridTemplateColumn Header="이미지"></DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="불러오기">
+                    <DataGrid x:Name="NaverSearchHistory" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <!-- 
+                                검색결과에 대한 이력정보를 저장 후 필요할 때 불러오기
+                            -->
+                            <DataGridTextColumn Header="일자"></DataGridTextColumn>
+                            <DataGridTextColumn Header="키워드"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</UserControl>
