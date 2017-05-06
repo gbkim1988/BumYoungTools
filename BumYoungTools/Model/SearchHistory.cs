@@ -46,6 +46,7 @@ namespace BumYoungTools.Model
             _artcTitle = title;
             _artcDate = date;
             _artcSummary = summary;
+            _artcLink = link;
             _artcActive = active;
             _artcThumbImg = thumb;
         }

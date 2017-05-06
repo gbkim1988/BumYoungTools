@@ -16,6 +16,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
+using System.Windows;
 
 namespace BumYoungTools.ViewModel
 {
@@ -58,6 +59,7 @@ namespace BumYoungTools.ViewModel
                 //return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
+
         public BumYoung1 BumYoung1VM
         {
             get

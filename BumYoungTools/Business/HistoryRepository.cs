@@ -11,17 +11,70 @@ namespace BumYoungTools.Business
     /// NaverSearch 목록을 저장
     /// </summary>
     [Serializable]
-    public class HistoryRepository : IHistoryRepository
+    public class HistoryRepository : Notifier, IHistoryRepository
     {
         private Guid _id;
-        private string SearchKeyword;
-        private IList<ISearchHistory> _HistoryCollection;
+        private string _keyword;
+        private IList<SearchHistory> _historyCollection;
 
-        public HistoryRepository(string keyword, IList<ISearchHistory> collection) {
-            SearchKeyword = keyword;
-            _HistoryCollection = collection;
+        public HistoryRepository(string keyword, IList<SearchHistory> collection)
+        {
+            _keyword = keyword;
+            _historyCollection = collection;
+            _id = Guid.NewGuid();
         }
 
+        public IList<SearchHistory> History
+        {
+            get { return _historyCollection; }
+            private set
+            {
+                // 수정 방지를 설정함 
+                _historyCollection = value;
+                RaisePropertyChanged("History");
+            }
+        }
 
+        public Guid Id
+        {
+            get { return _id; }
+            private set
+            {
+                _id = value;
+                RaisePropertyChanged("Id");
+            }
+        }
+
+        public string Keyword
+        {
+            get { return _keyword; }
+            set
+            {
+                _keyword = value;
+                RaisePropertyChanged("Keyword");
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != this.GetType())
+                return false;
+
+            var other = obj as HistoryRepository;
+            return other != null && other.Id == Id && other.Keyword == Keyword;
+        }
+
+        public IList<SearchHistory> getHistory() {
+            return History;
+        }
+
+        public string getKeyword() {
+            return Keyword;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

@@ -1,0 +1,16 @@
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\BumYoungTest.exe.config
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\BumYoungTest.exe
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\BumYoungTest.pdb
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\BumYoungTools.exe
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\Microsoft.Practices.Unity.dll
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\GalaSoft.MvvmLight.dll
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\BumYoungTools.pdb
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\Microsoft.Practices.Unity.xml
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\GalaSoft.MvvmLight.pdb
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\GalaSoft.MvvmLight.xml
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\obj\Debug\BumYoungTest.csprojResolveAssemblyReference.cache
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\obj\Debug\BumYoungTest.exe
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\obj\Debug\BumYoungTest.pdb

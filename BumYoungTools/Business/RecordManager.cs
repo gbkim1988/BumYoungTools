@@ -10,8 +10,17 @@ namespace BumYoungTools.Business
     public class RecordManager : IRecordManager
     {
         private readonly IList<IHistoryRepository> _HistoryCollection;
-        public RecordManager() {
+        public RecordManager(IList<IHistoryRepository> history) {
+            _HistoryCollection = history;
+        }
 
+        public IList<IHistoryRepository> HistoryCollection
+        {
+            get { return _HistoryCollection; }
+        }
+
+        public IList<IHistoryRepository> getCollection() {
+            return HistoryCollection;
         }
     }
 }

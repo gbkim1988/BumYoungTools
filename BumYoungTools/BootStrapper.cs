@@ -28,7 +28,7 @@ namespace BumYoungTools
         {
             //Container.RegisterInstance<INoteRepository>(new NoteRepository("notes"));
             //Container.RegisterInstance<ICategoryRepository>(new CategoryRepository("categories"));
-            Container.RegisterInstance<IBumYoung1Profile>(new BumYoung1Profile());
+            Container.RegisterInstance<IConfigManager>(new ConfigManager("BumYoungTools"));
             Container.RegisterType<MainViewModel>();
             Container.RegisterType<BumYoung1>();
         }

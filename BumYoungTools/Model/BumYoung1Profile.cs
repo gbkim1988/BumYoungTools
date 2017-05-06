@@ -24,7 +24,6 @@ namespace BumYoungTools.Model
         public void LoadProfile() {
             //ConfigPath = new XMLConfig(); // ["BumYoungTools.Properties.Settings.ConfigFilePath"];
 
-            MessageBox.Show("Gura");
         }
         
     }

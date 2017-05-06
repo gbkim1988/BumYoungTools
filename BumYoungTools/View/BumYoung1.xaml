@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BumYoungTools.View"
              xmlns:converter="clr-namespace:BumYoungTools.Converter"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              DataContext="{Binding Path=BumYoung1VM, Source={StaticResource Locator}}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -50,7 +51,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="40"/>
+            <ColumnDefinition Width="530" MinWidth="40"/>
             <ColumnDefinition Width="4"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -83,9 +84,9 @@
                     mson : (불명)
                     -->
                         <Label Content="검색 키워드:"></Label>
-                        <TextBox></TextBox>
+                        <TextBox Name="query" Text="{Binding Query,Mode=TwoWay}" ></TextBox>
                         <Label Content="블로그 URL:"></Label>
-                        <TextBox Name="post_blogurl">
+                        <TextBox Name="post_blogurl" Text="{Binding BlogUrl, Mode=TwoWay}">
                             <TextBox.Style>
                                 <Style TargetType="TextBox">
                                     <Setter Property="Background" Value="GreenYellow"/>
@@ -113,7 +114,7 @@
                             </TextBox.Style>
                         </TextBox>
                         <Label Content="제외 블로그 URL:"></Label>
-                        <TextBox Name="post_blogurl_without">
+                        <TextBox Name="post_blogurl_without" Text="{Binding WithoutUrl, Mode=TwoWay}">
                             <TextBox.Style>
                                 <Style TargetType="TextBox">
                                     <Setter Property="Background" Value="GreenYellow"/>
@@ -135,48 +136,71 @@
                             </TextBox.Style>
                         </TextBox>
                         <Label Content="정렬 기준 :"></Label>
-                        <RadioButton GroupName="st" Content="최신순" IsChecked="True">
+                        <RadioButton GroupName="st" Content="최신순" IsChecked="{Binding st0}">
                         </RadioButton>
-                        <RadioButton GroupName="st" Content="유사도">
+                        <RadioButton GroupName="st" Content="유사도"  IsChecked="{Binding st1}">
                         </RadioButton>
 
                         <Label Content="검색 영역 :"></Label>
-                        <RadioButton GroupName="srchby" Content="전체" IsChecked="True">
+                        <RadioButton GroupName="srchby" Content="전체" IsChecked="{Binding srchby0}">
                         </RadioButton>
-                        <RadioButton GroupName="srchby" Content="제목">
+                        <RadioButton GroupName="srchby" Content="제목" IsChecked="{Binding srchby1}">
                         </RadioButton>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Left" Grid.Column="1">
                         <Label Content="기간 설정 :"></Label>
-                        <RadioButton GroupName="date_option" Content="전체" IsChecked="True">
+                        <RadioButton GroupName="date_option" Content="전체" IsChecked="{Binding date_option0}">
                         </RadioButton>
-                        <RadioButton GroupName="date_option" Content="1일">
+                        <RadioButton GroupName="date_option" Content="1일" IsChecked="{Binding date_option1}">
                         </RadioButton>
-                        <RadioButton GroupName="date_option" Content="1주">
+                        <RadioButton GroupName="date_option" Content="1주" IsChecked="{Binding date_option2}">
                         </RadioButton>
-                        <RadioButton GroupName="date_option" Content="1개월">
+                        <RadioButton GroupName="date_option" Content="1개월" IsChecked="{Binding date_option3}">
                         </RadioButton>
-                        <RadioButton GroupName="date_option" Content="6개월">
+                        <RadioButton GroupName="date_option" Content="6개월" IsChecked="{Binding date_option4}">
                         </RadioButton>
-                        <RadioButton GroupName="date_option" Content="1년">
+                        <RadioButton GroupName="date_option" Content="1년" IsChecked="{Binding date_option5}">
                         </RadioButton>
-                        <RadioButton GroupName="date_option" Content="기간설정">
+                        <RadioButton GroupName="date_option" Content="기간설정" IsChecked="{Binding date_option6}">
                         </RadioButton>
                         <StackPanel>
                             <Label Content="기간 설정 :"></Label>
                             <Label Content="부터 : " FontSize="10" Background="White"></Label>
-                            <DatePicker FontSize="15" CalendarStyle="{StaticResource styleCalendar}" Margin="10 0 5 0"></DatePicker>
+                            <DatePicker FontSize="15" CalendarStyle="{StaticResource styleCalendar}" Margin="10 0 5 0" 
+                                        SelectedDate="{Binding Path=startTime, Mode=TwoWay}">
+                                <DatePicker.Style>
+                                    <Style TargetType="DatePicker">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=date_option6}" Value="False">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                                <Setter Property="Background" Value="DarkGray"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DatePicker.Style>
+                            </DatePicker>
                             <Label Content="까지 : " FontSize="10" Background="White"></Label>
-                            <DatePicker FontSize="15" CalendarStyle="{StaticResource styleCalendar}" Margin="10 0 5 0"></DatePicker>
+                            <DatePicker FontSize="15" CalendarStyle="{StaticResource styleCalendar}" Margin="10 0 5 0" SelectedDate="{Binding Path=endTime, StringFormat = {}{0:yyyyMMdd}}">
+                                <DatePicker.Style>
+                                    <Style TargetType="DatePicker">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=date_option6}" Value="False">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                                <Setter Property="Background" Value="DarkGray"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DatePicker.Style>
+                            </DatePicker>
                         </StackPanel>
                         
                         <Label Content="중복 글 허용 :"></Label>
-                        <RadioButton GroupName="dup_remove" Content="중복 포함" IsChecked="True">
+                        <RadioButton GroupName="dup_remove" Content="중복 포함" IsChecked="{Binding dup_remove0}">
                         </RadioButton>
-                        <RadioButton GroupName="dup_remove" Content="중복 제거">
+                        <RadioButton GroupName="dup_remove" Content="중복 제거" IsChecked="{Binding dup_remove1}">
                         </RadioButton>
 
-                        <Button Margin="10 10 0 0"> 검 색 </Button>
+                        <Button Margin="10 10 0 0" Command="{Binding GoSearch}"> 검 색 </Button>
                     </StackPanel>
                 </Grid>
                 
@@ -186,25 +210,62 @@
         <DockPanel Grid.Column="2" Margin="0 0 0 0">
             <TabControl>
                 <TabItem Header="현황">
-                    <DataGrid x:Name="NaverSearchResult" AutoGenerateColumns="False">
+                    <DataGrid x:Name="NaverSearchResult" ItemsSource="{Binding History}" AutoGenerateColumns="False" SelectionUnit="FullRow" SelectionMode="Extended">
+                        <!-- 
+                        <DataGrid.InputBindings>
+                            <MouseBinding Gesture="LeftDoubleClick"  Command="{Binding Open}" CommandParameter="{Binding ElementName=NaverSearchResult, Path=SelectedItem}" />
+                        </DataGrid.InputBindings>
+                        -->
+                        <!-- http://stackoverflow.com/questions/18595654/wpf-datagrid-double-click-cell-mvvm-design 
+                            파라미터를 전달할 때, ElementName 을 지정하고 Path 에 Element의 속성을 지정해 주면 인자로 들어간다??? 
+                        -->
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding Open}" CommandParameter="{Binding ElementName=NaverSearchResult, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="제목"></DataGridTextColumn>
-                            <DataGridTextColumn Header="날짜"></DataGridTextColumn>
-                            <DataGridTextColumn Header="요약"></DataGridTextColumn>
-                            <DataGridHyperlinkColumn Header="링크"></DataGridHyperlinkColumn>
-                            <DataGridTextColumn Header="활성화"></DataGridTextColumn>
-                            <DataGridTemplateColumn Header="이미지"></DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="제목" MaxWidth="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock VerticalAlignment="Center" 
+                                                   TextWrapping="Wrap"
+                                                   Text="{Binding artcTitle, Mode=OneWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="날짜">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock VerticalAlignment="Center" 
+                                                   TextWrapping="Wrap"
+                                                   Text="{Binding artcDate, Mode=OneWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="요약" MaxWidth="200">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock VerticalAlignment="Center"
+                                                   Text="{Binding artcSummary, Mode=OneWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <!-- TO DO : Mouse.MouseDown="" 마우스 클릭 시 동작 정의 -->
+                            <DataGridHyperlinkColumn Header="링크" MaxWidth="200" Binding="{Binding artcLink, Mode=OneWay}"></DataGridHyperlinkColumn>
+                            <DataGridTextColumn Header="블로그 활성화" Binding="{Binding artcActive, Mode=OneWay}"></DataGridTextColumn>
+                            <!-- <DataGridTemplateColumn Header="이미지" Binding="{Binding artcActive, Mode=OneWay}"></DataGridTemplateColumn> -->
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="불러오기">
-                    <DataGrid x:Name="NaverSearchHistory" AutoGenerateColumns="False">
+                    <DataGrid x:Name="NaverSearchHistory" AutoGenerateColumns="False" ItemsSource="{Binding Cache}">
                         <DataGrid.Columns>
                             <!-- 
                                 검색결과에 대한 이력정보를 저장 후 필요할 때 불러오기
                             -->
-                            <DataGridTextColumn Header="일자"></DataGridTextColumn>
-                            <DataGridTextColumn Header="키워드"></DataGridTextColumn>
+                            <!-- <DataGridTextColumn Header="일자"></DataGridTextColumn> -->
+                            <DataGridTextColumn Header="키워드"  Binding="{Binding Keyword, Mode=OneWay}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
