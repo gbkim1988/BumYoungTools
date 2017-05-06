@@ -15,12 +15,13 @@ namespace BumYoungTools.Model
         private string _dataFile;
         public ConfigManager(string fname)
         {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            // baseDir 변경 필요 권한 문제로 인해 설정 파일 저장 불가
+            string baseDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string fileName = string.Concat(fname + ".by");
             _dataFile = Path.Combine(baseDir, fileName);
 
             Deserialize();
-        }
+        }z
 
         private void Serialize()
         {
@@ -51,7 +52,15 @@ namespace BumYoungTools.Model
 
             Serialize();
         }
-
+        /// <summary>
+        /// IList<HistoryRepository> 컬렉션을 반환한다. 
+        /// 캐시된 내용을 포함한다.
+        /// </summary>
+        /// <returns></returns>
+        public IList<HistoryRepository> getCachedRepo()
+        {
+            return RecordManager.getCollection();
+        }
         public IRecordManager RecordManager
         {
             get { return Manager; }
@@ -72,7 +81,7 @@ namespace BumYoungTools.Model
                     Manager = (IRecordManager)formatter.Deserialize(stream);
                 }
             else
-                Manager = new RecordManager(new List<IHistoryRepository>());
+                Manager = new RecordManager(new List<HistoryRepository>());
         }
     }
 }

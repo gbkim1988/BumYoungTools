@@ -31,7 +31,7 @@ namespace BumYoungTest
             IList<SearchHistory> aaa = aa.ToList();
             HistoryRepository bb = new HistoryRepository("Test1", aaa);
             HistoryRepository bbb = new HistoryRepository("Test2", aaa);
-            List<IHistoryRepository> cc = new List<IHistoryRepository>();
+            IList<HistoryRepository> cc = new List<HistoryRepository>();
             cc.Add(bb);
             cc.Add(bbb);
             // 
@@ -42,12 +42,12 @@ namespace BumYoungTest
             //파일을 Default 로 생성하지 않는다. 
             Console.WriteLine("ConfigManager.SaveAll 메서드 호출의 경우");
             // 데이터 저장 확인 완료
-            ee.SaveAll(dd);
+            //ee.SaveAll(dd);
 
             // 다시 데이터를 불러오기 
             Console.WriteLine("ConfigManager로 부터 데이터를 불러오기");
             IRecordManager ff = ee.RecordManager;
-            IList<IHistoryRepository> gg = ff.getCollection();
+            IList<HistoryRepository> gg = ff.getCollection();
             foreach (var repo in gg)
             {
                 Console.WriteLine(repo.getKeyword());

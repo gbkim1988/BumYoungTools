@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BumYoungTools", "BumYoungTo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BumYoungTest", "BumYoungTest\BumYoungTest.csproj", "{900DC67D-8277-4908-B04D-ECBFE235960E}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BumYoungInstaller", "BumYoungInstaller\BumYoungInstaller.vdproj", "{9F03F1E5-24FB-43CA-8FEC-EF85362500ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{900DC67D-8277-4908-B04D-ECBFE235960E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{900DC67D-8277-4908-B04D-ECBFE235960E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{900DC67D-8277-4908-B04D-ECBFE235960E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F03F1E5-24FB-43CA-8FEC-EF85362500ED}.Debug|Any CPU.ActiveCfg = Debug
+		{9F03F1E5-24FB-43CA-8FEC-EF85362500ED}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,3 +14,6 @@ C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\
 C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\obj\Debug\BumYoungTest.csprojResolveAssemblyReference.cache
 C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\obj\Debug\BumYoungTest.exe
 C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\obj\Debug\BumYoungTest.pdb
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\HtmlAgilityPack.dll
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\gbkim\Documents\Visual Studio 2015\Projects\BumYoungTools\BumYoungTest\bin\Debug\HtmlAgilityPack.xml

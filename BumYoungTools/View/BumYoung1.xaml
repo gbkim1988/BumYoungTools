@@ -146,6 +146,10 @@
                         </RadioButton>
                         <RadioButton GroupName="srchby" Content="제목" IsChecked="{Binding srchby1}">
                         </RadioButton>
+                        <Label Content="검색 개수"></Label>
+                        <TextBox Name="unit" Text="{Binding Search_unit}"></TextBox>
+                        <Label Content="게시글 인덱스"></Label>
+                        <TextBox Name="index" Text="{Binding Index}"></TextBox>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Left" Grid.Column="1">
                         <Label Content="기간 설정 :"></Label>
@@ -199,7 +203,6 @@
                         </RadioButton>
                         <RadioButton GroupName="dup_remove" Content="중복 제거" IsChecked="{Binding dup_remove1}">
                         </RadioButton>
-
                         <Button Margin="10 10 0 0" Command="{Binding GoSearch}"> 검 색 </Button>
                     </StackPanel>
                 </Grid>
@@ -259,13 +262,19 @@
                     </DataGrid>
                 </TabItem>
                 <TabItem Header="불러오기">
-                    <DataGrid x:Name="NaverSearchHistory" AutoGenerateColumns="False" ItemsSource="{Binding Cache}">
+                    <DataGrid x:Name="NaverSearchHistory" AutoGenerateColumns="False" ItemsSource="{Binding Cache}" SelectionUnit="FullRow" SelectionMode="Extended">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding Turn}" CommandParameter="{Binding ElementName=NaverSearchHistory, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <DataGrid.Columns>
                             <!-- 
                                 검색결과에 대한 이력정보를 저장 후 필요할 때 불러오기
                             -->
                             <!-- <DataGridTextColumn Header="일자"></DataGridTextColumn> -->
                             <DataGridTextColumn Header="키워드"  Binding="{Binding Keyword, Mode=OneWay}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="레코드"  Binding="{Binding History.Count, Mode=OneWay}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

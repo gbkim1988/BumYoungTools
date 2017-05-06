@@ -12,5 +12,6 @@ namespace BumYoungTools.Model
         void SaveAll();
         void SaveAll(IRecordManager _manger);
         void SaveAs(string fname);
+        IList<HistoryRepository> getCachedRepo();
     }
 }

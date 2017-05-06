@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BumYoungTools.Async
 {
+
     public class AsyncObservableCollection<T> : ObservableCollection<T>
     {
         // https://gist.github.com/thomaslevesque/10023516 

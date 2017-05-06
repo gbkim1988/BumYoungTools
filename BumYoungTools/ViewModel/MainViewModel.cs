@@ -1,5 +1,9 @@
+using BumYoungTools.Message;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
+using System.Windows.Input;
 
 namespace BumYoungTools.ViewModel
 {
@@ -30,6 +34,27 @@ namespace BumYoungTools.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
+        }
+        private ICommand closeWindowCommand;
+
+        public ICommand CloseWindowCommand
+        {
+            get
+            {
+                if (closeWindowCommand == null)
+                {
+                    closeWindowCommand = new RelayCommand(() => this.CloseWindow(), null);
+                }
+                return closeWindowCommand;
+            }
+        }
+
+        private void CloseWindow()
+        {
+            //Do your operations
+            MessageBox.Show("Really?");
+            // 이벤트를 등록하여 BumYoung1 ViewModel 이 정상적이 종료 로직을 수행하도록 해준다.
+            Messenger.Default.Send(new ExitMessage { Exit = true });
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using BumYoungTools.Async;
 using BumYoungTools.Business;
 using BumYoungTools.Extension;
+using BumYoungTools.Message;
 using BumYoungTools.Model;
 using BumYoungTools.Service;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -18,7 +21,7 @@ using System.Windows.Input;
 
 namespace BumYoungTools.ViewModel
 {
-    public class BumYoung1 : ViewModelBase
+    public class BumYoung1 : ViewModelBase, IDisposable
     {
         private IConfigManager _config;
 
@@ -227,9 +230,38 @@ namespace BumYoungTools.ViewModel
                 RaisePropertyChanged("dup_remove1");
             }
         }
+
+        private string search_unit = "10";
+        public string Search_unit
+        {
+            get { return search_unit; }
+            set
+            {
+                search_unit = value;
+                RaisePropertyChanged("Search_unit");
+            }
+        }
+        private string index = "0";
+        public string Index
+        {
+            get { return index; }
+            set
+            {
+                index = value;
+                RaisePropertyChanged("Index");
+            }
+        }
         #endregion
 
         public ICommand Open { get; private set; }
+        public ICommand Turn { get; private set; }
+
+        private void TurnOver(object collector)
+        {
+            if (!(collector is HistoryRepository))
+                return;
+            History = new AsyncObservableCollection<SearchHistory>(((HistoryRepository)collector).getHistory());
+        }
 
         private static void OpenBrowser (object item)
         {
@@ -264,45 +296,38 @@ namespace BumYoungTools.ViewModel
 
         public BumYoung1(IConfigManager config) {
             _config = config;
+            Messenger.Default.Register<ExitMessage>(this, ReceiveExitMessage);
+            _cache = new AsyncObservableCollection<HistoryRepository>(_config.getCachedRepo());
+            // 이전 데이터를 불러와서 복구한다.
             Open = new RelayCommand<object>(OpenBrowser);
+            Turn = new RelayCommand<object>(TurnOver);
             // _config 에 Deserialzed 된 데이터가 존재하는 경우, 이전 데이터를 복구
             // 그렇지 않을 경우 새로운 Collection 을 생성
             // 
             //_history = new AsyncObservableCollection<SearchHistory>();
-            _cache = new AsyncObservableCollection<HistoryRepository>();
+
             GoSearch = new DelegateCommand(() => {
                 History = new AsyncObservableCollection<SearchHistory>();
-                Cache.Add(new HistoryRepository(Query, new List<SearchHistory>()));
-                for (int i = 990; i < 1000; i+= 10) { 
+                for (int i = int.Parse(Index); i < int.Parse(Index) + int.Parse(Search_unit); i+= 10) { 
                     Uri _url = NaverUrlGenerate(i);
                     var countBytes = AsyncCommand.Create(token => NaverCrawlerServices.NaverBlogCrawlerAsync(_url, History, limitConnection, token));
                     countBytes.Execute(null);
                 }
+                Cache.Add(new HistoryRepository(Query, History));
             });
         }
-
-        private void NaverSearch()
+        private void ReceiveExitMessage(ExitMessage message)
         {
-            /*
-            DateTime myDate = new DateTime();
-            try {
-                MessageBox.Show(startTime);
-                myDate = DateTime.ParseExact(startTime, "M/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.CurrentCulture);
-                MessageBox.Show(myDate.ToString());
-            }catch(Exception e)
+            if (message.Exit)
             {
-                Console.WriteLine(e.Message);
+                IList<HistoryRepository> tmp = new List<HistoryRepository>();
+                foreach( var _item in Cache)
+                {
+                    tmp.Add(new HistoryRepository(_item.Keyword, _item.getHistory().ToList<SearchHistory>()));
+                }
+                RecordManager manager = new RecordManager(tmp);
+                _config.SaveAll(manager);
             }
-            */
-            // 검색 시작 시 아래와 같은 절차를 거친다. 
-            // 1. Control 의 속성을 통해 URL 을 생성한다. 
-            // 2. 비동기 요청을 전송한다.        
-
-            // 1. URL 생성 
-           
-            // Control 로 부터 정보를 수집 및 검색 URL 반환
-
-            // URL 에 대한 조회를 비동기로 추가
         }
 
         private Uri NaverUrlGenerate(int start) {
@@ -375,12 +400,41 @@ namespace BumYoungTools.ViewModel
             return query_url;
         }
 
-        ~BumYoung1()
+        #region IDisposable Support
+        private bool disposedValue = false; // 중복 호출을 검색하려면
+
+        protected virtual void Dispose(bool disposing)
         {
-            // To Do : AsyncObservableCollection<SearchHistory> -> ConfigManager 
-            //         로 데이터 전달 및 저장
-            _config.SaveAll();
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: 관리되는 상태(관리되는 개체)를 삭제합니다.
+
+                }
+
+                // TODO: 관리되지 않는 리소스(관리되지 않는 개체)를 해제하고 아래의 종료자를 재정의합니다.
+                // TODO: 큰 필드를 null로 설정합니다.
+
+                disposedValue = true;
+            }
         }
+
+        // TODO: 위의 Dispose(bool disposing)에 관리되지 않는 리소스를 해제하는 코드가 포함되어 있는 경우에만 종료자를 재정의합니다.
+        // ~BumYoung1() {
+        //   // 이 코드를 변경하지 마세요. 위의 Dispose(bool disposing)에 정리 코드를 입력하세요.
+        //   Dispose(false);
+        // }
+
+        // 삭제 가능한 패턴을 올바르게 구현하기 위해 추가된 코드입니다.
+        public void Dispose()
+        {
+            // 이 코드를 변경하지 마세요. 위의 Dispose(bool disposing)에 정리 코드를 입력하세요.
+            Dispose(true);
+            // TODO: 위의 종료자가 재정의된 경우 다음 코드 줄의 주석 처리를 제거합니다.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
 
     }
 }

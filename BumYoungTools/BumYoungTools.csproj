@@ -126,6 +126,7 @@
     <Compile Include="Business\TestRepository.cs" />
     <Compile Include="Converter\TextLengthToBoolean.cs" />
     <Compile Include="Extension\UriExtensions.cs" />
+    <Compile Include="Message\ExitMessage.cs" />
     <Compile Include="Model\BumYoung1Profile.cs" />
     <Compile Include="Model\ConfigManager.cs" />
     <Compile Include="Model\IBumYoung1Profile.cs" />

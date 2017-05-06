@@ -15,6 +15,6 @@ namespace BumYoungTools.Business
         ///  인터페이스를 사용하는 이유는 ?
         ///  -> 
         /// </summary>
-        IList<IHistoryRepository> getCollection();
+        IList<HistoryRepository> getCollection();
     }
 }

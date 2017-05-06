@@ -5,11 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BumYoungTools"
         xmlns:view="clr-namespace:BumYoungTools.View"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         Icon="icon/vision.png"
         mc:Ignorable="d"
         Style="{StaticResource MyWindowStyleKey}"
         DataContext="{Binding Path=MainVM, Source={StaticResource Locator}}"
         Title="Deep Insight">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseWindowCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <!-- 
     단축키 세팅 
     <Window.CommandBindings>
