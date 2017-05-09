@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using BumYoungTools.ViewModel;
+using System.Windows;
+using System.Windows.Input;
 
 namespace BumYoungTools
 {
@@ -10,6 +12,8 @@ namespace BumYoungTools
         public MainWindow()
         {
             InitializeComponent();
+            // 키보드 Press 제어 핸들러
+            AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)MainViewModel.HandleKeyDownEvent);
         }
     }
 }

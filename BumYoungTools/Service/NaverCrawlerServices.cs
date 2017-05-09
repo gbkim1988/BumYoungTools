@@ -74,11 +74,19 @@ namespace BumYoungTools.Service
                                 if (stat.StatusCode == HttpStatusCode.NotFound)
                                     isActive = false;
                             }
-                            _history.Add(new SearchHistory(title, date, summary, link, isActive, null));
+                            if (isActive == false) {
+                                // 요구 사항 : 동일한 링크가 존재할 경우 제외 
+                                // _history.Where()
+                                
+                                if ( _history.Where(item => !item.artcLink.Contains(_strBlogLink)).Count() == 0 ) 
+                                    _history.Add(new SearchHistory(title, date, summary, link, isActive, null));
+                            }
+                            
+
                         }
                         catch
                         {
-
+                            // 모든 Exception 날리기
                         }
                         finally
                         {

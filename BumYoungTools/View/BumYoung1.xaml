@@ -221,7 +221,7 @@
                         -->
                         <!-- http://stackoverflow.com/questions/18595654/wpf-datagrid-double-click-cell-mvvm-design 
                             파라미터를 전달할 때, ElementName 을 지정하고 Path 에 Element의 속성을 지정해 주면 인자로 들어간다??? 
-                        -->
+                        -->                       
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
                                 <i:InvokeCommandAction Command="{Binding Open}" CommandParameter="{Binding ElementName=NaverSearchResult, Path=SelectedItem}"/>

@@ -21,7 +21,7 @@ namespace BumYoungTools.Model
             _dataFile = Path.Combine(baseDir, fileName);
 
             Deserialize();
-        }z
+        }
 
         private void Serialize()
         {

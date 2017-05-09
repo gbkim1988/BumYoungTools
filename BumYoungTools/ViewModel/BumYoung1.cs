@@ -293,7 +293,7 @@ namespace BumYoungTools.ViewModel
 
         //public RelayCommand GoSearch { get; private set; }
         public ICommand GoSearch { get; private set; }
-
+        public ICommand CopyCommand { get; private set; }
         public BumYoung1(IConfigManager config) {
             _config = config;
             Messenger.Default.Register<ExitMessage>(this, ReceiveExitMessage);
@@ -301,6 +301,7 @@ namespace BumYoungTools.ViewModel
             // 이전 데이터를 불러와서 복구한다.
             Open = new RelayCommand<object>(OpenBrowser);
             Turn = new RelayCommand<object>(TurnOver);
+            CopyCommand = new RelayCommand(CopyDataGrid);
             // _config 에 Deserialzed 된 데이터가 존재하는 경우, 이전 데이터를 복구
             // 그렇지 않을 경우 새로운 Collection 을 생성
             // 
@@ -315,6 +316,9 @@ namespace BumYoungTools.ViewModel
                 }
                 Cache.Add(new HistoryRepository(Query, History));
             });
+        }
+        private void CopyDataGrid() {
+            MessageBox.Show("Common");
         }
         private void ReceiveExitMessage(ExitMessage message)
         {

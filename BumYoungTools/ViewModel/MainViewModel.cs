@@ -49,6 +49,17 @@ namespace BumYoungTools.ViewModel
             }
         }
 
+        public static void HandleKeyDownEvent(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab && (Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Shift)) == (ModifierKeys.Control | ModifierKeys.Shift))
+            {
+                MessageBox.Show("CTRL + SHIFT + TAB trapped");
+            }
+            else if (e.Key == Key.C && (Keyboard.Modifiers & (ModifierKeys.Control)) == ModifierKeys.Control) {
+                MessageBox.Show("CTRL + C trapped");
+            }
+        }
+
         private void CloseWindow()
         {
             //Do your operations

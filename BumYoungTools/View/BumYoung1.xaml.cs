@@ -23,6 +23,7 @@ namespace BumYoungTools.View
         public BumYoung1()
         {
             InitializeComponent();
+            
         }
     }
 }
