@@ -19,7 +19,8 @@ namespace BumYoungTools.Service
     {
         public static async Task<int> NaverBlogCrawlerAsync(Uri url, 
             AsyncObservableCollection<SearchHistory> _history,
-            SemaphoreSlim sem, 
+            SemaphoreSlim sem,
+            bool isEnd,
             CancellationToken token = new CancellationToken())
         {
             string _url = HttpUtility.UrlDecode(url.ToString());
@@ -75,8 +76,6 @@ namespace BumYoungTools.Service
                                     isActive = false;
                             }
                             if (isActive == false) {
-                                // 요구 사항 : 동일한 링크가 존재할 경우 제외 
-                                // _history.Where()
                                 
                                 if ( _history.Where(item => !item.artcLink.Contains(_strBlogLink)).Count() == 0 ) 
                                     _history.Add(new SearchHistory(title, date, summary, link, isActive, null));
@@ -90,7 +89,8 @@ namespace BumYoungTools.Service
                         }
                         finally
                         {
-                            
+                            if (isEnd)
+                                MessageBox.Show("검색이 완료되었습니다.", "알림");
                         }
 
                     }
