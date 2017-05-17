@@ -75,13 +75,13 @@ namespace BumYoungTools.Service
                                 if (stat.StatusCode == HttpStatusCode.NotFound)
                                     isActive = false;
                             }
-                            if (isActive == false) {
+                            //if (isActive == false) { // 중복 제거 
+                            if (isActive == false) { 
                                 
-                                if ( _history.Where(item => !item.artcLink.Contains(_strBlogLink)).Count() == 0 ) 
-                                    _history.Add(new SearchHistory(title, date, summary, link, isActive, null));
+                                //if ( _history.Where(item => !item.artcLink.Contains(_strBlogLink)).Count() == 0 ) 
+                                _history.Add(new SearchHistory(title, date, summary, link, isActive, null));
                             }
-                            
-
+                            //_history.Add(new SearchHistory(title, date, summary, link, isActive, null));
                         }
                         catch
                         {
@@ -89,13 +89,15 @@ namespace BumYoungTools.Service
                         }
                         finally
                         {
-                            if (isEnd)
-                                MessageBox.Show("검색이 완료되었습니다.", "알림");
+
                         }
 
                     }
                 }
             }
+            if (isEnd)
+                MessageBox.Show("검색이 완료되었습니다.", "알림");
+
             sem.Release();
 
 

@@ -24,7 +24,6 @@ namespace BumYoungTools.ViewModel
     public class BumYoung1 : ViewModelBase, IDisposable
     {
         private IConfigManager _config;
-        private int nCount;
         #region UI Control DataSource (Not Edit This Section)
         private string _query = "검색어 입력";
         public string Query
@@ -290,7 +289,7 @@ namespace BumYoungTools.ViewModel
                 RaisePropertyChanged("Cache");
             }
         }
-
+        
         //public RelayCommand GoSearch { get; private set; }
         public ICommand GoSearch { get; private set; }
         public ICommand CopyCommand { get; private set; }
@@ -311,7 +310,7 @@ namespace BumYoungTools.ViewModel
                 History = new AsyncObservableCollection<SearchHistory>();
                 bool isEnd = false;
                 for (int i = int.Parse(Index); i < int.Parse(Index) + int.Parse(Search_unit); i+= 10) {
-                    if (!(i < int.Parse(Index) + int.Parse(Search_unit)))
+                    if (!(i+10 < int.Parse(Index) + int.Parse(Search_unit)))
                         isEnd = true;
                     Uri _url = NaverUrlGenerate(i);
                     var countBytes = AsyncCommand.Create(token => NaverCrawlerServices.NaverBlogCrawlerAsync(_url, History, limitConnection, isEnd, token));
